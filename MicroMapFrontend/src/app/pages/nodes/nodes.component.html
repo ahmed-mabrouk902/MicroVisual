@@ -1,0 +1,109 @@
+<div class="row">
+  <div class="col-md-12 text-center">
+    <div *ngIf="showAlert" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
+
+      <span>Node Deleted Successfully</span>
+    </div>
+    <div *ngIf="errorLoading" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
+
+      <span>An error occured While loading nodes ... Check Connection</span>
+    </div>
+    <div *ngIf="errorDelete" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
+
+      <span>An error occured While Deleting node ... Check connection</span>
+    </div>
+    <div *ngIf="errorExport" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
+
+      <span>An error occured While Exporting the nodes ... Check connection</span>
+    </div>
+    <div class="card text-center">
+      <div class="card-header" style="text-align: left; display: grid; grid-template-columns: 1fr auto;">
+        <h4 class="card-title" style="margin-right: 25px;">List of All Available Nodes  </h4>
+        <div style="display: flex; justify-content: flex-end;">
+          <input type="text"  placeholder="Search Nodes" [(ngModel)]="searchText" (input)="filterItems()" class="search-container" *ngIf="enableText"/>
+
+          <button  *ngIf="n!=0" style="width: 200px; margin-right: 10px; border-radius: 10px;" (click)="exportNodes()">Dowload Nodes</button>
+          <button *ngIf="isAdmin && n!=0"  style="width: 200px; background-color: #ef8157; border-radius: 10px;" (click)="deleteAllModel()">Delete All Nodes</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table">
+          <table class="table">
+            <thead class=" text-primary">
+              <th style="cursor:pointer;"(click)="sortItems('name')">Name</th>
+              <th style="cursor:pointer;"(click)="sortItems('type')">Type</th>
+              <th *ngIf="isAdmin">Actions</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let node of paginatedNodes"  >
+                <td >
+                  {{node.name}}
+                </td>
+                <td>
+                  {{node.type}}
+                </td>
+                <td>
+                  <button *ngIf="isAdmin" type="button" class="btn btn-danger btn-round" style="background-color: #ef8157; width: auto;"
+                    (click)="deleteModel(this.node.name)">
+                    Delete
+                  </button>
+                </td>
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination-container">
+          <div class="page-size-select">
+            <label for="pageSizeSelect">Items per page:</label>
+            <select id="pageSizeSelect" [(ngModel)]="selectedPageSize" (change)="onPageSizeChange($event)" style="width:50px; height:30px;" class="search-container ng-untouched ng-valid ng-dirty" >
+              <option *ngFor="let option of pageSizeOptions" [value]="option" >
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <mat-paginator [length]="nodes.length" [pageSize]="selectedPageSize" (page)="onPageChange($event)"></mat-paginator>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--
+    delete model
+  -->
+  <div id="deleteModal" class="modal">
+
+    <form class="modal-content" >
+      <div class="container">
+        <h1>Delete Node</h1>
+        <p>Are you sure you want to delete your This Node</p>
+
+        <div>
+          <button class="btn btn-primary btn-round" type="button"
+            onclick="document.getElementById('deleteModal').style.display='none'" class="cancelbtn">Cancel</button>
+          <button class="btn btn-danger btn-round" type="button" (click)="deleteNode()"
+            class="deletebtn">Delete</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!--
+    delete All model
+  -->
+  <div id="deleteAllModal" class="modal">
+
+    <form class="modal-content" >
+      <div class="container">
+        <h1>Delete All Nodes</h1>
+        <p>Are you sure you want to delete All the Nodes</p>
+
+        <div>
+          <button class="btn btn-primary btn-round" type="button"
+            onclick="document.getElementById('deleteAllModal').style.display='none'" class="cancelbtn">Cancel</button>
+          <button class="btn btn-danger btn-round" type="button" (click)="deleteAll()"
+            class="deletebtn">Delete</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+
+<nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent" style="padding: 0px,0px;" >
+  <div class="container-fluid" style="color: #F99417;">
+
+   
+                    <div class="navbar-wrapper" >
+                          <div class="navbar-toggle">
+                                <button type="button" class="navbar-toggler" (click)="sidebarToggle()">
+                                    <span class="navbar-toggler-bar bar1"></span>
+                                    <span class="navbar-toggler-bar bar2"></span>
+                                    <span class="navbar-toggler-bar bar3"></span>
+                                </button>
+                          </div>
+                      <a class="navbar-brand" href="javascript:void(0)" style="color: #F99417;">{{getTitle()}}</a>
+                    </div>
+                    <!-- feedback -->
+                                                                            <button (click)="showForm=!showForm" 
+                                                                style="background-color: #8E24AA; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                                                          Feedback
+                                                        </button>
+
+                                                        <div *ngIf="showForm" 
+                                                            class="feedback-popup" 
+                                                            style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #6A1B9A; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); width: 300px; z-index: 1000;">
+                                                          
+                                                          <h2 style="color: white; margin-bottom: 20px; text-align: center;">Feedback Form</h2>
+                                                          
+                                                          <form (ngSubmit)="submitFeedback()">
+                                                            
+                                                            <div style="margin-bottom: 15px;">
+                                                              <label for="message" style="display: block; margin-bottom: 5px; color:white;">Message:</label>
+                                                              <textarea id="message" [(ngModel)]="feedback.message" name="message" required
+                                                                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+                                                            </div>
+                                                            
+                                                            <button type="submit" 
+                                                                    style="background-color: #F99417; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%; margin-bottom: 10px;">
+                                                              Send Feedback
+                                                            </button>
+                                                            
+                                                            <button type="button" (click)="closeFeedbackForm()" 
+                                                                    style="background-color: #8E24AA; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%;">
+                                                              Close
+                                                            </button>
+                                                          
+                                                          </form>
+                                                        </div>
+                    
+                    
+                     <!--  -->
+    <button class="navbar-toggler" type="button" (click)="collapse()"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+    </button>
+              
+    <p style="font-weight: bold;" >{{username}},  <button *ngIf="isLoggedIn !== undefined && isLoggedIn" type="button" class="btn btn-secondary"  (click)="logout()"  routerLinkActive="router-link-active" >Log Out</button>  </p>
+  </div>
+</nav>

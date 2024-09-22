@@ -1,0 +1,702 @@
+/* Container Styles */
+.dashboard {
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.main-content {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: margin-right 0.3s ease-in-out; /* Smooth transition */
+}
+
+.main-content.shifted {
+  margin-right: 1px; /* Move 1px away from the popup */
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+/* Graph Area */
+.graph-area {
+  position: relative;
+  width: 100%;
+  height: 100%; /* Adjusted for a more compact layout it was 500px*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.graph-container {
+  flex-grow: 1;
+  height: 735px;
+  top: -100px;
+  margin-top: 10px; /* Move 180px away from the popupbutton */
+  background: #f1f1f1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.graph-container.shifted {
+  margin-left: 350px; /* Move 1px away from the popup */
+  
+  
+}
+.graph-emitator {
+  flex-grow: 1;
+  margin-top:-40px;
+  margin-left:60px;
+  width:auto;
+  overflow: hidden;
+}
+.graph-emitator.shifted {
+  margin-left: 350px; /* Move 350px away from the popup */
+  
+  
+}
+
+/* Zoom Control */
+.zoom-control {
+  position: absolute;
+  top: 50%;
+  left: -65px; /* Adjust position to be outside the graph */
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+}
+
+.zoom-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.vertical-slider-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vertical-slider {
+  -webkit-appearance: slider-vertical; /* For Chrome/Safari */
+  writing-mode: vertical-rl; /* For Firefox */
+  height: 150px; /* Height of the slider */
+  width: 5px;
+  
+  margin: 0;
+  background: #ccc;
+  border-radius: 5px;
+}
+
+.vertical-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.vertical-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
+/* Controls Section */
+.controls {
+  margin-top: 20px;
+}
+
+.controls .row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.controls .col-md-4 {
+  flex: 1 1 33.333%;
+  padding: 5px; /* Reduced padding for more compact layout */
+}
+
+.controls h4 {
+  font-size: 1rem; /* Smaller font size for compact layout */
+  margin-bottom: 5px;
+  margin-top: 5px;
+  color: #007bff;
+}
+
+.controls .btn {
+  width: 100%;
+  padding: 5px 0; /* Reduced padding for more compact layout */
+  font-size: 0.8rem; /* Smaller font size for compact layout */
+  border-radius: 5px;
+}
+
+.controls .form-control {
+  width: 100%;
+  padding: 5px; /* Reduced padding for more compact layout */
+  font-size: 0.8rem; /* Smaller font size for compact layout */
+  border-radius: 5px;
+  
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .controls .col-md-4 {
+    flex: 1 1 100%;
+    padding: 5px;
+  }
+}
+
+
+
+/* graph.component.css */
+.popup {
+  position: absolute;
+  background: white;
+  border: 1px solid #31f2f2;
+  padding: 15px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.popup-content {
+  max-width: 300px;
+}
+
+.popup button {
+  margin-top: 10px;
+}
+
+
+
+
+/* checkbox  */
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+  .checkbox-wrapper-13 input[type=checkbox] {
+    --active: #275EFE;
+    --active-inner: #fff;
+    --focus: 2px rgba(39, 94, 254, .3);
+    --border: #BBC1E1;
+    --border-hover: #275EFE;
+    --background: #fff;
+    --disabled: #F6F8FF;
+    --disabled-inner: #E1E6F9;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 21px;
+    outline: none;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+    border: 1px solid var(--bc, var(--border));
+    background: var(--b, var(--background));
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:after {
+    content: "";
+    display: block;
+    left: 0;
+    top: 0;
+    position: absolute;
+    transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s);
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:checked {
+    --b: var(--active);
+    --bc: var(--active);
+    --d-o: .3s;
+    --d-t: .6s;
+    --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:disabled {
+    --b: var(--disabled);
+    cursor: not-allowed;
+    opacity: 0.9;
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:disabled:checked {
+    --b: var(--disabled-inner);
+    --bc: var(--border);
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:disabled + label {
+    cursor: not-allowed;
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:hover:not(:checked):not(:disabled) {
+    --bc: var(--border-hover);
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:focus {
+    box-shadow: 0 0 0 var(--focus);
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:not(.switch) {
+    width: 21px;
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:not(.switch):after {
+    opacity: var(--o, 0);
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:not(.switch):checked {
+    --o: 1;
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox] + label {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-left: 4px;
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:not(.switch) {
+    border-radius: 7px;
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:not(.switch):after {
+    width: 5px;
+    height: 9px;
+    border: 2px solid var(--active-inner);
+    border-top: 0;
+    border-left: 0;
+    left: 7px;
+    top: 4px;
+    transform: rotate(var(--r, 20deg));
+  }
+
+  .checkbox-wrapper-13 input[type=checkbox]:not(.switch):checked {
+    --r: 43deg;
+  }
+}
+
+.checkbox-wrapper-13 * {
+  box-sizing: inherit;
+}
+
+.checkbox-wrapper-13 *:before,
+  .checkbox-wrapper-13 *:after {
+  box-sizing: inherit;
+}
+
+/* new tooltip uiverse */
+/* From Uiverse.io by theleaderofenemy */ 
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  margin: 20px;
+}
+
+.text {
+  color: #333;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  visibility: hidden;
+  background: #0b798a;
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  transition: opacity 0.3s, visibility 0.3s, top 0.3s, background 0.3s;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent #0b798a transparent;
+  transform: translateX(-50%);
+}
+
+.tooltip-container:hover .tooltip {
+  top: 120%;
+  opacity: 1;
+  visibility: visible;
+  background: #0e94a0;
+  transform: translate(-50%, -5px);
+}
+
+
+/* dragging container */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: flex-end; /* Aligns the popup to the right side like a sidebar */
+  z-index: 999;
+}
+
+.popup-container {
+  width: 350px; /* Adjust width as needed */
+  height: 100vh;
+  padding: 20px;
+  position: absolute;
+  background-color: #6a1b9a; /* Purple background */
+  border-left: 5px solid #4a148c; /* Darker purple border for a fancier look */
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+  overflow-y: auto; /* Allows content overflow */
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4a148c; /* Darker purple header */
+  color: white;
+  padding: 10px;
+  border-bottom: 1px solid #311b92;
+  /* cursor: grab; */
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+}
+
+.popup-content {
+  padding: 10px;
+  
+  color: white;
+  font-family: 'Arial', sans-serif;
+  flex-grow: 1; /* Ensures content can grow within the sidebar */
+}
+
+button {
+  background-color: #8e24aa;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #7b1fa2;
+}
+
+
+
+/* play pause physics */
+.container {
+  --color: #a5a5b0;
+  --size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--size);
+  user-select: none;
+  fill: var(--color);
+}
+
+.container .play {
+  position: absolute;
+  animation: keyframes-fill .5s;
+}
+
+.container .pause {
+  position: absolute;
+  display: none;
+  animation: keyframes-fill .5s;
+}
+
+/* ------ On check event ------ */
+.container input:checked ~ .play {
+  display: none;
+}
+
+.container input:checked ~ .pause {
+  display: block;
+}
+
+/* ------ Hide the default checkbox ------ */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* ------ Animation ------ */
+@keyframes keyframes-fill {
+  0% {
+    transform: rotate(-180deg) scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: rotate(-10deg) scale(1.2);
+  }
+}
+
+
+/* fullscreen animation */
+
+.fullscreen-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.fullscreen-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+
+.fullscreen-btn svg {
+  fill: #333;
+  width: 24px;
+  height: 24px;
+  transition: fill 0.3s;
+}
+
+.fullscreen-btn:hover svg {
+  fill: #007bff;
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px 10px;
+  position: absolute;
+
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  transition: opacity 0.3s, visibility 0.3s;
+  font-size: 8px;
+  margin-bottom: 10px;
+  z-index: 10;
+  height: 15px;
+}
+
+.fullscreen-btn:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/* new checkbox purple */
+/* From Uiverse.io by sssynk */ 
+/* Hide the default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  border-radius: 5px;
+ }
+ 
+ .container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 20px;
+  user-select: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0px rgb(183, 183, 183);
+ }
+ 
+ /* Create a custom checkbox */
+ /* Hide the default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  border-radius: 5px;
+ }
+ 
+ .container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 20px;
+  user-select: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0px rgb(183, 183, 183);
+ }
+ 
+ /* Create a custom checkbox */
+ .checkmark {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 1.3em;
+  width: 1.3em;
+  background-color: #ccc;
+  border-radius: 5px;
+ }
+ 
+ /* When the checkbox is checked, add a blue background */
+ .container input:checked ~ .checkmark {
+  box-shadow: 3px 3px 0px rgb(183, 183, 183);
+  transition: all 0.2s;
+  opacity: 1;
+  background-image: linear-gradient(45deg, rgb(100, 61, 219) 0%, rgb(217, 21, 239) 100%);
+ }
+ 
+ .container input ~ .checkmark {
+  transition: all 0.2s;
+  opacity: 1;
+  box-shadow: 1px 1px 0px rgb(183, 183, 183);
+ }
+ 
+ /* Create the checkmark/indicator (hidden when not checked) */
+ .checkmark:after {
+  content: "";
+  position: absolute;
+  opacity: 0;
+  transition: all 0.2s;
+ }
+ 
+ /* Show the checkmark when checked */
+ .container input:checked ~ .checkmark:after {
+  opacity: 1;
+  transition: all 0.2s;
+ }
+ 
+ /* Style the checkmark/indicator */
+ .container .checkmark:after {
+  left: 0.45em;
+  top: 0.25em;
+  width: 0.25em;
+  height: 0.5em;
+  border: solid white;
+  border-width: 0 0.15em 0.15em 0;
+  transform: rotate(45deg);
+ }
+
+/* smooth switch */
+/* From Uiverse.io by Bodyhc */
+.flipswitch {
+  position: relative;
+  width: 50px; /* Adjusted width */
+}
+
+.flipswitch input[type=checkbox] {
+  display: none;
+}
+
+.flipswitch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #999999;
+  border-radius: 25px; /* Adjusted for smaller size */
+}
+
+.flipswitch-inner {
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+
+.flipswitch-inner:before, .flipswitch-inner:after {
+  float: left;
+  width: 50%;
+  height: 20px; /* Adjusted height */
+  padding: 0;
+  line-height: 20px; /* Adjusted line height */
+  font-size: 12px; /* Adjusted font size */
+  color: white;
+  font-family: Trebuchet, Arial, sans-serif;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.flipswitch-inner:before {
+  content: "ON";
+  padding-left: 10px; /* Adjusted padding */
+  background-color: #437A99;
+  color: #FFFFFF;
+}
+
+.flipswitch-inner:after {
+  content: "   OFF";
+  padding-right: 2px; /* Adjusted padding */
+  background-color: #FFFFFF;
+  color: #437A99;
+  text-align: right;
+}
+
+.flipswitch-switch {
+  width: 20px; /* Adjusted width */
+  margin: 0;
+  background: #FFFFFF;
+  border: 1px solid #999999;
+  border-radius: 25px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 30px; /* Adjusted right position */
+  transition: all 0.3s ease-in 0s;
+}
+
+.flipswitch-cb:checked + .flipswitch-label .flipswitch-inner {
+  margin-left: 0;
+}
+
+.flipswitch-cb:checked + .flipswitch-label .flipswitch-switch {
+  right: 0;
+}

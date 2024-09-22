@@ -1,0 +1,83 @@
+<div class="container-fluid" style="padding: 20px;">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div *ngIf="((showAlert)&&!(errorAddNode))" class="alert alert-primary alert-dismissible fade show text-center">
+                <span>Node Added Successfully</span>
+            </div>
+            <div *ngIf="errorAddNode" class="alert alert-danger alert-dismissible fade show text-center">
+                <span>An Error Occurred while adding the Node ... Check if the Node Exists Or Check Connection</span>
+            </div>
+            <div *ngIf="((importedSuccess)&&!(errorImportNodes))" class="alert alert-primary alert-dismissible fade show text-center">
+                <span>Nodes imported Successfully</span>
+            </div>
+            <div *ngIf="errorImportNodes" class="alert alert-danger alert-dismissible fade show text-center">
+                <span>{{importNodesErrorMessage}}</span>
+            </div>
+            <div class="card card-user">
+                <div class="card-header">
+                    <h5 class="card-title text-center">Add a new Node</h5>
+                </div>
+                <div class="card-body">
+                    <form #addFormNode="ngForm" (ngSubmit)="addNode(addFormNode)">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" [(ngModel)]="name" class="form-control" placeholder="Node Name" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="type">Type</label>
+                                    <select id="type" type="text" name="type" class="form-control" [(ngModel)]="type" placeholder="Node Type" required>
+                                        <option value="API Gateway">API Gateway</option>
+                                        <option value="Microservice">Microservice</option>
+                                        <option value="Domain">Domain</option>
+                                        <option value="Mobility Provider">Mobility Provider</option>
+                                        <option value="Device">Device</option>
+                                        <option value="AWS Service">AWS Service</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="update ml-auto mr-auto">
+                                <button type="submit" class="btn btn-primary btn-round" [disabled]="addFormNode.invalid">
+                                    Add Node
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- import -->
+            <div class="card card-user">
+                <div class="card-header">
+                    <h5 class="card-title text-center">Import Nodes</h5>
+                </div>
+                <div class="card-body" style="min-height: auto;">
+                    <form #importNodesForm (ngSubmit)="importNodes(importNodesForm)">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="custom-file-upload" style="border: 1px solid #ccc; display: inline-block; padding: 6px 12px; cursor: pointer;">
+                                    <input type="file" (change)="handleFileSelect($event)" accept=".xls,.xlsx"/>
+                                    Upload File
+                                </label>
+                                <label style="margin-left:10px;">{{selectedFileName}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="update ml-auto mr-auto">
+                                <button [disabled]="!isFileSelected" type="submit" class="btn btn-primary btn-round">
+                                    Import
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

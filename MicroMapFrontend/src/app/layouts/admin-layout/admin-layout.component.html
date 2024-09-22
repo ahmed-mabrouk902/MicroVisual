@@ -1,0 +1,28 @@
+
+   
+    
+    <div class="wrapper" data-color="black" data-active-color="danger" *ngIf="isLoggedIn">
+        <div class="sidebar" data-color="white" data-active-color="danger">
+            <sidebar-cmp></sidebar-cmp>
+        </div>
+        <div class="main-panel" style="background-color: #49108B; color: #F99417; width: 1268px auto;">
+            <navbar-cmp class="navbar" [ngClass]="{ 'hidden': !isVisible }"></navbar-cmp>
+            <div class="content" style="height: 100%; margin-top: 40px;">
+              <router-outlet></router-outlet>
+            </div>
+            <div *ngIf="test"></div>
+            <br><br><br><br>
+        </div>
+          
+
+    </div>
+    <div>
+        <!-- <app-graph-visualization></app-graph-visualization> -->
+        <!-- <footer-cmp></footer-cmp> -->
+    </div>
+
+
+   <!-- for sidebar colors -->
+        <!-- <fixedplugin-cmp></fixedplugin-cmp> -->
+
+   

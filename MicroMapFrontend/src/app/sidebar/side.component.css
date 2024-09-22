@@ -1,0 +1,30 @@
+.menu-item {
+    position: relative;
+}
+
+.menu-item::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 10px solid gray; /* Default triangle color */
+}
+
+.active .menu-item::before {
+    border-bottom-color: red; /* Color when the menu item is active */
+}
+
+/* triangle */
+
+
+/* Change the color to purple when the item is active */
+.nav li.active a::before, 
+.nav li.active a::after {
+    border-color: transparent transparent transparent #49108B; /* For ::before */
+    border-color: transparent #49108B transparent transparent; /* For ::after */
+}

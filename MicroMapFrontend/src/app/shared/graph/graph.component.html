@@ -1,0 +1,231 @@
+
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<!-- popup -->
+      <button (click)="togglePopup()"  ><i class="bi bi-sliders"></i></button>
+      <!--  -->
+      
+                                                            <div class="graph-emitator" [class.shifted]="isPopupVisible">
+                                                                        <!-- Node Search with Autocomplete -->
+                                                                                  <mat-form-field style="margin-right: 5px;">
+                                                                                    <mat-label>Search Nodes</mat-label>
+                                                                                    <input
+                                                                                      type="text"
+                                                                                      matInput
+                                                                                      [matAutocomplete]="auto"
+                                                                                      id="node-search"
+                                                                                      (input)="onSearch($event.target.value)"
+                                                                                      formControlName="searchControl"
+                                                                                    />
+                                                                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSearch($event.option.value)">
+                                                                                      <mat-option *ngFor="let suggestion of filteredNodes; let i=index" [value]="suggestion">
+                                                                                        {{i}} {{ suggestion }}
+                                                                                      </mat-option>
+                                                                                    </mat-autocomplete>
+                                                                                  </mat-form-field>
+
+                                                                                  <!-- Sync or Async Selection -->
+                                                                                  <mat-form-field>
+                                                                                    <mat-label>Sync or Async</mat-label>
+                                                                                    <select matNativeControl (change)="syncOrAsync=$event.target.value; filterSuggestions()">
+                                                                                      <option value="">-- Sync or Async --</option>
+                                                                                      <option value="all">All</option>
+                                                                                      <option *ngFor="let item of check" [value]="item">{{ item }}</option>
+                                                                                    </select>
+                                                                                  </mat-form-field>
+
+                                                                                  <!-- API Filter -->
+                                                                                  <ng-container *ngIf="syncOrAsync === 'sync'" >
+                                                                                    <mat-form-field>
+                                                                                      <mat-label>Select API</mat-label>
+                                                                                      <select matNativeControl (change)="selectedApi=$event.target.value; onApiFilter($event)">
+                                                                                        <option value="">-- Select API --</option>
+                                                                                        <option value="all">All</option>
+                                                                                        <option *ngFor="let itemapi of api" [value]="itemapi">{{ itemapi }}</option>
+                                                                                      </select>
+                                                                                    </mat-form-field>
+                                                                                  </ng-container>
+
+                                                                                  <!-- Event Producer Filter -->
+                                                                                  <ng-container *ngIf="syncOrAsync === 'async'">
+                                                                                    <mat-form-field>
+                                                                                      <mat-label>Select Event</mat-label>
+                                                                                      <select matNativeControl (change)="selectedEventProducer=$event.target.value; onEventProducerFilter($event)">
+                                                                                        <option value="">-- Select Event --</option>
+                                                                                        <option value="all">All</option>
+                                                                                        <option *ngFor="let itemevent of eventProducer" [value]="itemevent">{{ itemevent }}</option>
+                                                                                      </select>
+                                                                                    </mat-form-field>
+                                                                                  </ng-container>
+
+                                                                                  <!-- Topic Filter -->
+                                                                                  <ng-container *ngIf="syncOrAsync === 'async'">
+                                                                                    <mat-form-field>
+                                                                                      <mat-label>Select Topic</mat-label>
+                                                                                      <select matNativeControl (change)="selectedTopic=$event.target.value; onTopicFilter($event)">
+                                                                                        <option value="">-- Select Topic --</option>
+                                                                                        <option value="all">All</option>
+                                                                                        <option *ngFor="let itemtop of topic" [value]="itemtop">{{ itemtop }}</option>
+                                                                                      </select>
+                                                                                    </mat-form-field>
+                                                                                  </ng-container>
+                                                                                  <!-- Node Search with Autocomplete -->
+
+                                                                </div>
+       <!--  -->
+      
+      
+    
+     
+ 
+    
+  
+      <div #graphContainer id="viz" class="graph-container" [class.shifted]="isPopupVisible" style="cursor: grab;"></div>
+    
+<!-- popup -->
+<div *ngIf="isPopupVisible" class="popup-container" #popupContainer style="left: -1px; top: 79px; height: 900px;">
+  <div class="popup-header" >
+    <h3 style="color: #F99417;">Control</h3>
+    <br>
+    <button (click)="togglePopup()">Close</button>
+    
+            <button class="fullscreen-btn" (click)="toggleFullScreen()" >
+              <svg viewBox="0 0 448 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z"
+                ></path>
+              </svg>
+              <span class="tooltip">Fullscreen</span>
+            </button>
+    
+  </div>
+  <div class="popup-content" style="width: 288px; height: 602px;">
+    <div class="controls mt-4">
+      <div class="row">
+        <!-- straight -->
+                          <div class="col-md-12" style="display: flex; align-items: center; gap: 10px;">
+                            <h4 style="margin-bottom: 14px; line-height: 21px;">  <!-- Ensure line-height matches the flipswitch height -->
+                              straight:
+                            </h4>
+                            <div class="flipswitch" style="display: flex; align-items: center;">
+                              <input checked id="fs" class="flipswitch-cb" name="flipswitch" type="checkbox" (change)="switchEdges(); isSmooth = !isSmooth">
+                              <label for="fs" class="flipswitch-label" style="height: 21px;">
+                                <div class="flipswitch-inner"></div>
+                                <div class="flipswitch-switch" style="height: 21px;"></div>
+                              </label>
+                            </div>
+                          </div>
+        <!-- Zoom Control -->
+        <div class="col-md-12" style="display: flex; align-items: center;">
+          <!-- zoom -->
+          <h4 style="margin: 0;">Zoom</h4>
+          <input type="range" class="form-range" id="zoomRange" min="0.1" max="2" step="0.1" value="1" (input)="onZoomChange($event)" style="margin-right: 10px;">
+          
+          <!-- zoom -->
+                              <!-- play and pause button -->
+                                        <button [ngStyle]="{'background-color': isplay ? '#006400' : '#8B0000'}" style="width: 80px; height: 40px; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s, transform 0.2s;" (mouseover)="hover = true" (mouseout)="hover = false">
+                                          <label class="container" style="display: flex; align-items: center; justify-content: center; margin: 0;">
+                                            <input type="checkbox" [(ngModel)]="isplay" (click)="togglePhysics()" style="display: none;">
+                                            <svg viewBox="0 0 384 512" height="30px" xmlns="http://www.w3.org/2000/svg" class="play" *ngIf="!isplay" style="width: 20px; height: 30px; fill: white;">
+                                              <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"></path>
+                                            </svg>
+                                            <svg viewBox="0 0 320 512" height="30px" xmlns="http://www.w3.org/2000/svg" class="pause" *ngIf="isplay" style="width: 20px; height: 30px; fill: white;">
+                                              <path d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"></path>
+                                            </svg>
+                                          </label>
+                                        </button>
+                            <!-- play and pause button -->
+                             
+                             
+        </div>
+                          
+                          
+        <!-- Node Controls -->
+        <div class="col-md-12">
+          <h4>Node Controls</h4>
+          <!-- matched and unmatched -->
+                <button type="button" class="btn btn-warning mb-2" style="width: 48%; height: 25px; padding: 5px 0; font-size: 0.8rem; border-radius: 5px;" (click)="showMatchedNodes()">Matched Node</button>
+                <button type="button" class="btn btn-info mb-2" style="width: 48%; height: 25px; padding: 5px 0; font-size: 0.8rem; border-radius: 5px;" (click)="showUnmatchedNodes()">Unmatched Node</button>
+          <!-- matched and unmatched -->
+          <div class="d-flex justify-content-between">
+            <!-- selection of issuer target -->
+              <select class="form-control mb-2" style="width: 48%" (change)="retrieveAllRelations(nodeToDecide=$event.target.value)">
+                <option value="">-- issuer & conx --</option>
+                <option *ngFor="let option of nodeOptions" [value]="option">{{ option }}</option>
+              </select>
+
+              <select class="form-control mb-2" style="width: 48%" (change)="nodeToDecide2=$event.target.value">
+                <option value="">-- target --</option>
+                <option *ngFor="let option of nodesForChoice" [value]="option">{{ option }}</option>
+              </select>
+            <!-- selection of issuer target -->
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" style="width: 48%; height: 25px; padding: 5px 0; font-size: 0.8rem; border-radius: 5px;" (click)="showRoot(nodeToDecide,nodeToDecide2)"> Node Root </button>
+            <button type="button" class="btn btn-secondary" style="width: 48%; height: 25px; padding: 5px 0; font-size: 0.8rem; border-radius: 5px;" (click)="showNodesRelations(nodeToDecide)"> Node Conx </button>
+          </div>
+        </div>
+    
+        <br>
+    
+        <!-- Relationship Controls -->
+        <div class="col-md-12">
+            <h4>Relationship Controls</h4>
+            <div class="d-flex justify-content-between">
+                <!-- onlysync or onlyasync -->
+                  <button type="button" class="btn btn-warning mb-2" style="width: 48%; height: 25px; padding: 5px 0; font-size: 0.8rem; border-radius: 5px;" (click)="showOnlySync()">Only Sync</button>
+                  <button type="button" class="btn btn-info mb-2" style="width: 48%; height: 25px; padding: 5px 0; font-size: 0.8rem; border-radius: 5px;" (click)="showOnlyAsync()">Only Async</button>
+                <!-- onlysync or onlyasync -->
+            </div>
+        </div>
+        <br>
+    
+       
+    
+        <br>
+    
+        <!-- Color Filters -->
+        <div class="col-md-12" >
+          <h4>Color Filters</h4>
+          <select class="form-control mb-2" [(ngModel)]="selectedNodeType" (change)="updateNodeColor()">
+            <option value="">Select a Node Type</option>
+            <option *ngFor="let type of nodeTypes" [value]="type">{{ type }}</option>
+          </select>
+    
+          <div >
+            <input type="checkbox" class="form-check-input" [(ngModel)]="colorUse" style="margin-left:5px ;" id="customColorUse">
+            <label class="form-check-label" style="margin-left:20px ;" for="customColorUse"><strong>Custom Use</strong></label>
+          </div>
+            <!-- colors -->
+          <div *ngIf="selectedNodeType" style="background: #ffffff; padding: 8px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); max-width: 255px; display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 8px;">
+            <label for="colorPicker" style="font-weight: 600; margin-bottom: 4px; font-size: 12px; color: #444;">
+                    <div style="display: flex; align-items: center; gap: 8px;">{{selectedNodeType}} color: 
+                        <input type="color" id="colorPicker" class="form-control" [(ngModel)]="selectedColor" (change)="updateNodeColor()" style="width: 28px; height: 28px; border: none; cursor: pointer; padding: 0; background: none;">
+                        <span style="font-size: 12px; color: #666; background: #eee; padding: 2px 6px; border-radius: 4px; border: 1px solid #ddd;">{{selectedColor}}</span>
+                    </div>
+            </label>
+           
+          </div>
+          
+         
+        
+        
+
+          
+    
+          
+        </div>
+    
+        <br>
+    
+        
+    
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+
+

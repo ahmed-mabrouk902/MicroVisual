@@ -1,0 +1,21 @@
+
+<div class="sidebar-wrapper" style="background-color: #F3F8FF;">
+  <div class="logo" style="height: 78.99px;">
+    <a  class="simple-text logo-mini">
+      <div class="logo-image-small">
+        <img src="assets/img/infinity.png">
+      </div>
+    </a>
+    <a  class="simple-text logo-normal">
+      MicroMap
+    </a>
+  </div>
+    <ul class="nav" s>
+        <li *ngFor="let menuItem of menuItems" routerLinkActive="active" class="{{menuItem.class}}">
+            <a [routerLink]="[menuItem.path]">
+                <i class="nc-icon {{menuItem.icon}}"></i>
+                <p>{{menuItem.title}}</p>
+            </a>
+        </li>
+    </ul>
+</div>

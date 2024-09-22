@@ -1,0 +1,12 @@
+.navbar {
+    
+    top: 0;
+    width: 100%;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    
+  }
+  
+  .navbar.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
